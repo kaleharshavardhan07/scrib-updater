@@ -1,0 +1,7 @@
+node_modules/
+.env
+output/
+*.aux
+*.log
+*.out
+*.synctex.gz

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Resume Builder — Tailor to Any Job</title>
+    <meta name="description" content="AI-powered resume tailoring tool using Gemini AI and LaTeX" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="/style.css" />
+</head>
+
+<body>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <main class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <rect width="32" height="32" rx="8" fill="url(#grad)" />
+                    <path d="M8 10h16M8 16h12M8 22h14" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+                    <defs>
+                        <linearGradient id="grad" x1="0" y1="0" x2="32" y2="32">
+                            <stop stop-color="#6366f1" />
+                            <stop offset="1" stop-color="#a855f7" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <h1>AI Resume Builder</h1>
+            </div>
+            <p class="subtitle">Paste a job description → Get a tailored resume PDF in seconds</p>
+        </header>
+
+        <% if (error) { %>
+            <div class="alert alert-error">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                        clip-rule="evenodd" />
+                </svg>
+                <span>
+                    <%= error %>
+                </span>
+            </div>
+            <% } %>
+
+                <% if (success) { %>
+                    <div class="alert alert-success">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <span>
+                            <%= success.message %>
+                        </span>
+                        <a href="<%= success.downloadUrl %>" class="btn btn-download" id="download-btn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                            </svg>
+                            Download PDF
+                        </a>
+                    </div>
+                    <% } %>
+
+                        <!-- Main Form (Step 1: Analyze) -->
+                        <form action="/analyze" method="POST" id="analyze-form">
+                            <div class="grid">
+                                <!-- Left: Resume Preview -->
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h2>
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2">
+                                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                                                <polyline points="14,2 14,8 20,8" />
+                                                <line x1="16" y1="13" x2="8" y2="13" />
+                                                <line x1="16" y1="17" x2="8" y2="17" />
+                                                <polyline points="10,9 9,9 8,9" />
+                                            </svg>
+                                            Your Resume (LaTeX)
+                                        </h2>
+                                        <span class="badge">
+                                            <%= resumeExists ? 'resume.tex loaded' : 'no file found' %>
+                                        </span>
+                                    </div>
+                                    <textarea name="resumeContent" id="resume-textarea" class="code-editor"
+                                        placeholder="Place your resume.tex in the project root folder..."
+                                        spellcheck="false"><%= resumeContent %></textarea>
+                                </div>
+
+                                <!-- Right: Job Description & Company -->
+                                <div class="card" style="display: flex; flex-direction: column;">
+                                    <div class="card-header">
+                                        <h2>
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2">
+                                                <path
+                                                    d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z" />
+                                                <path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16" />
+                                            </svg>
+                                            Target Job Details
+                                        </h2>
+                                    </div>
+                                    <div style="padding: 1.25rem 1.25rem 0 1.25rem;">
+                                        <input type="text" name="companyName"
+                                            placeholder="Target Company Name (e.g. Google)"
+                                            value="<%= typeof companyName !== 'undefined' ? companyName : '' %>"
+                                            required
+                                            style="width: 100%; padding: 0.8rem; background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 6px; color: var(--text-primary); font-family: var(--font-body); font-size: 0.9rem; margin-bottom: 1rem; outline: none;" />
+                                    </div>
+                                    <textarea name="jobDescription" id="jd-textarea" class="jd-editor"
+                                        style="min-height: 330px; border-top: 1px solid var(--border);"
+                                        placeholder="Paste the full job description here...&#10;&#10;Example:&#10;We are looking for a Senior Software Engineer with experience in Node.js, React, AWS..."
+                                        spellcheck="false"
+                                        required><%= typeof jobDescription !== 'undefined' ? jobDescription : '' %></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="actions">
+                                <button type="submit" class="btn btn-primary" id="analyze-btn" <%=(typeof summary
+                                    !=='undefined' && summary) ? 'disabled' : '' %>>
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <circle cx="11" cy="11" r="8" />
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                    </svg>
+                                    <span class="btn-text">
+                                        <%= (typeof summary !=='undefined' && summary) ? 'Analyzed'
+                                            : 'Analyze & Suggest Edits' %>
+                                    </span>
+                                    <span class="btn-loading" style="display:none;">
+                                        <span class="spinner"></span> Analyzing JD...
+                                    </span>
+                                </button>
+                            </div>
+                        </form>
+
+                        <% if (typeof summary !=='undefined' && summary) { %>
+                            <!-- Step 2: Review and Compile -->
+                            <div class="card result-card" style="margin-top: 2rem; border-color: var(--accent);">
+                                <div class="card-header" style="background: rgba(99, 102, 241, 0.1);">
+                                    <h2>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                            <polyline points="22 4 12 14.01 9 11.01" />
+                                        </svg>
+                                        Proposed Changes for <%= companyName %>
+                                    </h2>
+                                </div>
+                                <div style="padding: 1.5rem; color: var(--text-primary);">
+                                    <ul style="padding-left: 1.5rem; line-height: 1.8;">
+                                        <% summary.forEach(change=> { %>
+                                            <li style="margin-bottom: 0.5rem;">
+                                                <%= change %>
+                                            </li>
+                                            <% }) %>
+                                    </ul>
+
+                                    <form action="/compile" method="POST" id="compile-form"
+                                        style="margin-top: 2rem; text-align: center;">
+                                        <input type="hidden" name="modifiedLatex" value="<%= modifiedLatex %>" />
+                                        <input type="hidden" name="companyName" value="<%= companyName %>" />
+                                        <input type="hidden" name="jobDescription" value="<%= jobDescription %>" />
+                                        <input type="hidden" name="resumeContent" value="<%= resumeContent %>" />
+
+                                        <button type="submit" class="btn btn-primary" id="compile-btn"
+                                            style="background: linear-gradient(135deg, var(--green) 0%, #059669 100%);">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2">
+                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                                <polyline points="7 10 12 15 17 10" />
+                                                <line x1="12" y1="15" x2="12" y2="3" />
+                                            </svg>
+                                            <span class="btn-text">Proceed & Download PDF</span>
+                                            <span class="btn-loading" style="display:none;">
+                                                <span class="spinner"></span> Compiling PDF...
+                                            </span>
+                                        </button>
+                                    </form>
+                                </div>
+
+                                <div class="card-header" style="border-top: 1px solid var(--border);">
+                                    <h2>Modified LaTeX Preview</h2>
+                                    <button type="button" class="btn btn-sm" id="copy-btn"
+                                        onclick="copyLatex()">Copy</button>
+                                </div>
+                                <pre class="code-output"><code><%= modifiedLatex %></code></pre>
+                            </div>
+                            <% } %>
+    </main>
+
+    <footer class="footer">
+        <p>Built with Gemini AI • LaTeX • Express</p>
+    </footer>
+
+    <script>
+        // Loading state for Analyze form
+        const analyzeForm = document.getElementById('analyze-form');
+        const analyzeBtn = document.getElementById('analyze-btn');
+        if (analyzeForm) {
+            analyzeForm.addEventListener('submit', () => {
+                analyzeBtn.disabled = true;
+                analyzeBtn.querySelector('.btn-text').style.display = 'none';
+                analyzeBtn.querySelector('.btn-loading').style.display = 'inline-flex';
+                analyzeBtn.classList.add('loading');
+            });
+        }
+
+        // Loading state for Compile form
+        const compileForm = document.getElementById('compile-form');
+        const compileBtn = document.getElementById('compile-btn');
+        if (compileForm) {
+            compileForm.addEventListener('submit', () => {
+                compileBtn.disabled = true;
+                compileBtn.querySelector('.btn-text').style.display = 'none';
+                compileBtn.querySelector('.btn-loading').style.display = 'inline-flex';
+                compileBtn.classList.add('loading');
+            });
+        }
+
+        // Copy modified LaTeX
+        function copyLatex() {
+            const code = document.querySelector('.code-output code');
+            if (code) {
+                navigator.clipboard.writeText(code.textContent).then(() => {
+                    const btn = document.getElementById('copy-btn');
+                    btn.textContent = 'Copied!';
+                    setTimeout(() => btn.textContent = 'Copy', 2000);
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>

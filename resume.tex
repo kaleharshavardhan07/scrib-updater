@@ -1,0 +1,177 @@
+\documentclass[letterpaper,10.5pt]{article}
+
+\usepackage{latexsym}
+\usepackage[margin=1in]{geometry}
+\usepackage{titlesec}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{fontawesome5}
+\input{glyphtounicode}
+
+\pagestyle{fancy}
+\fancyhf{} \fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\addtolength{\oddsidemargin}{-0.6in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1.19in}
+\addtolength{\topmargin}{-.7in}
+\addtolength{\textheight}{1.4in}
+
+\urlstyle{same}
+\raggedbottom \raggedright
+\setlength{\tabcolsep}{0in}
+
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large\bfseries
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+\pdfgentounicode=1
+
+\newcommand{\resumeItem}[1]{\item\small{{#1 \vspace{-2pt}}}}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \textbf{\small #2} \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \vspace{-2pt}\item
+    \begin{tabular*}{1.001\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & \textbf{\small #2}\\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\tiny$\bullet$}}$}
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.0in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}\vspace{2pt}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+\begin{document}
+
+% ---------- HEADING ----------
+\begin{center}
+    {\Huge \scshape Harshavardhan Prataprao Kale} \\ \vspace{4pt}
+    \small \raisebox{-0.1\height}\faPhone\ +918177876465 ~
+    \href{mailto:kaleharshavardhan07@gmail.com}{\raisebox{-0.2\height}\faEnvelope\ \underline{kaleharshavardhan07@gmail.com}} ~
+    \href{https://linkedin.com/in/kaleharshavardhan07}{\raisebox{-0.2\height}\faLinkedin\ \underline{LinkedIn}} ~
+    \href{https://github.com/kaleharshavardhan07}{\raisebox{-0.2\height}\faGithub\ \underline{GitHub}} ~
+    \href{https://leetcode.com/kaleharshavardhan07}{\raisebox{-0.2\height}\faCode\ \underline{LeetCode}}
+    \vspace{-8pt}
+\end{center}
+
+% ---------- EXPERIENCE ----------
+\section{Experience}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Pine Labs}{Jan 2026 -- Present}
+      {Software Development Intern}{Pune, India}
+      \resumeItemListStart
+        \resumeItem{Contributing to backend development for fintech payment infrastructure using Java and scalable backend systems}
+        \resumeItem{Working on database management and API design for high-throughput payment processing services}
+        \resumeItem{\textbf{Technologies:} Java, Backend Systems, Database Management}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Schaeffler Technology Solutions}{Jun 2025 -- Aug 2025}
+      {Product Development Intern}{Pune, India}
+      \resumeItemListStart
+        \resumeItem{Automated Windows server provisioning using PowerShell scripts, reducing deployment time by \textbf{90\%} (2 days to 4 hours) and eliminating \textbf{40\%} of configuration errors across 4+ production servers}
+        \resumeItem{\textbf{Technologies:} PowerShell, Windows Server, IIS, Confluence}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Mirai -- BuildUp Global}{May 2025 -- Sep 2025}
+      {Lead Developer Intern}{Remote}
+      \resumeItemListStart
+        \resumeItem{Led 4-member team to build full-stack career guidance platform serving \textbf{2,200+ students} with 35\% engagement increase through AI-driven recommendations}
+        \resumeItem{\textbf{Technologies:} MongoDB, Express.js, React.js, Node.js, Redis, GCP}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+\vspace{-16pt}
+
+% ---------- PROJECTS ----------
+\section{Projects}
+    \resumeSubHeadingListStart
+
+      \resumeProjectHeading
+          {\textbf{Credit+: AI Credit Orchestration Suite} $|$ \emph{AWS Bedrock, Node.js, DynamoDB, Docker}}{Nov 2025 -- Jan 2026}
+          \resumeItemListStart
+            \resumeItem{RAG + Agentic AI on AWS Bedrock across 28 credit policies delivering \textbf{sub-5s} loan decisions with RBI compliance-override safety and full Rule ID auditability}
+            \resumeItem{Real-time rule sync pipeline (Python Lambda + DynamoDB + S3) pushing updates to live AI agent in \textbf{60--90s}; admin portal deployed on Elastic Beanstalk with Docker}
+            
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{Database Engine } $|$ \emph{C++, B-Tree, WAL, MVCC}}{Aug 2025 -- Sep 2025}
+          \resumeItemListStart
+            \resumeItem{Built SQL-compatible relational DB engine with B-tree indexing, write-ahead logging for crash recovery, and full ACID transaction support}
+            \resumeItem{Implemented MVCC supporting \textbf{100+ simultaneous connections}; achieved \textbf{3x faster} crash recovery and \textbf{40\% faster} query execution via index selection algorithms}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{Himayat -- Workforce Hiring Platform} $|$ \emph{React Native, Firebase, MongoDB, Google Maps API}}{Jan 2025 -- Mar 2025}
+          \resumeItemListStart
+            \resumeItem{Geolocation-based service marketplace connecting domestic workers with employers, designed for \textbf{50,000+ users} with real-time discovery within 5km radius}
+            \resumeItem{Built Cloudinary media storage handling \textbf{10,000+ images} with automatic compression reducing bandwidth by 70\%}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{COEP-Connect -- College Social Network} $|$ \emph{Python, Flask, MongoDB, WebSockets}}{Jan 2024 -- Apr 2024}
+          \resumeItemListStart
+            \resumeItem{Flask-based social platform for \textbf{500+ college students} with anonymous/public posting, polls, real-time notifications, and intelligent interest-based student matching}
+             \resumeItem{Built intelligent "Connect to People" recommendation system matching students based on shared interests, clubs, sports, and academic needs using custom algorithm}
+          \resumeItemListEnd
+
+    \resumeSubHeadingListEnd
+\vspace{-15pt}
+
+% ---------- TECHNICAL SKILLS ----------
+\section{Technical Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Languages}{: C++, Java, Python, JavaScript, SQL, HTML/CSS} \\
+     \textbf{Frameworks \& Libraries}{: React.js, Node.js, Express.js, Flask, Flutter, Scikit-learn} \\
+     \textbf{Databases}{: MongoDB, MySQL, PostgreSQL, Firebase, Redis} \\
+     \textbf{Developer Tools}{: Git, Docker, Postman, PowerShell, Vercel, GCP, GitHub Actions} \\
+     \textbf{Core Competencies}{: Data Structures \& Algorithms, System Design, RESTful APIs, OOP, Cloud Computing}
+    }}
+ \end{itemize}
+ \vspace{-16pt}
+
+% ---------- COMPETITIVE PROGRAMMING ----------
+\section{Competitive Programming}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{LeetCode}{: 756+ problems $|$ Contest Rating: 1682 $|$ Top 14.4\% globally $|$ 250+ day streak} \\
+     \textbf{GeeksforGeeks}{: 200+ problems $|$ Contest Rating: 1587 $|$ Institute Rank: Top 5\%}
+    }}
+ \end{itemize}
+ \vspace{-16pt}
+
+% ---------- EDUCATION ----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {COEP Technological University}{Pune, India}
+      {Bachelor of Technology in Computer Engineering}{Nov 2022 -- Jun 2026}
+    \resumeSubheading
+      {Samarth Madhyamik va Uchhamadhyamik Vidyalay}{Karjat, India}
+      {Higher Secondary Certificate (HSC) -- 94.83\% $|$ MHT-CET: 99.81 Percentile}{Jun 2020 -- Dec 2021}
+  \resumeSubHeadingListEnd
+
+
+\end{document}
