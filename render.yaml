@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: ai-resume-builder
+    env: docker
+    plan: free
+    region: oregon 
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
